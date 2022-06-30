@@ -1,10 +1,9 @@
+import FlashMessageManager from "./FlashMessageManager";
+import FlashMessageWrapper, { styleWithInset } from "./FlashMessageWrapper";
+import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { StyleSheet, TouchableWithoutFeedback, Platform, StatusBar, Animated, Image, Text, View } from "react-native";
 import { isIphoneX, getStatusBarHeight } from "react-native-iphone-x-helper";
-import PropTypes from "prop-types";
-
-import FlashMessageManager from "./FlashMessageManager";
-import FlashMessageWrapper, { styleWithInset } from "./FlashMessageWrapper";
 
 /**
  * MessageComponent `minHeight` property used mainly in vertical transitions
@@ -204,8 +203,7 @@ export const DefaultFlash = React.forwardRef(
         ref={ref}
         position={typeof position === "string" ? position : null}
         statusBarHeight={statusBarHeight}
-        withInsets={withInsets}
-      >
+        withInsets={withInsets}>
         {wrapperInset => (
           <View
             style={styleWithInset(
@@ -226,30 +224,35 @@ export const DefaultFlash = React.forwardRef(
               !!hideStatusBar,
               position !== "center" && floating ? "margin" : "padding"
             )}
-            {...props}
-          >
-            {hasIcon && icon.position === "left" && iconView}
-            <View style={styles.flashLabel}>
-              <Text
-                style={[
-                  styles.flashText,
-                  hasDescription && styles.flashTitle,
-                  !!message.color && { color: message.color },
-                  titleStyle,
-                ]}
-                {...textProps}
-                {...titleProps}
-              >
-                {message.message}
-              </Text>
-              {!!renderCustomContent && renderCustomContent(message)}
-              {hasDescription && (
-                <Text style={[styles.flashText, !!message.color && { color: message.color }, textStyle]} {...textProps}>
-                  {message.description}
-                </Text>
-              )}
-            </View>
-            {hasIcon && icon.position === "right" && iconView}
+            {...props}>
+            {!!renderCustomContent ? (
+              renderCustomContent(message)
+            ) : (
+              <>
+                {hasIcon && icon.position === "left" && iconView}
+                <View style={styles.flashLabel}>
+                  <Text
+                    style={[
+                      styles.flashText,
+                      hasDescription && styles.flashTitle,
+                      !!message.color && { color: message.color },
+                      titleStyle,
+                    ]}
+                    {...textProps}
+                    {...titleProps}>
+                    {message.message}
+                  </Text>
+                  {hasDescription && (
+                    <Text
+                      style={[styles.flashText, !!message.color && { color: message.color }, textStyle]}
+                      {...textProps}>
+                      {message.description}
+                    </Text>
+                  )}
+                </View>
+                {hasIcon && icon.position === "right" && iconView}
+              </>
+            )}
           </View>
         )}
       </FlashMessageWrapper>
