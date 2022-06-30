@@ -179,6 +179,7 @@ export const DefaultFlash = React.forwardRef(
       floating = false,
       icon,
       hideStatusBar = false,
+      withInsets = true,
       ...props
     },
     ref
@@ -203,6 +204,7 @@ export const DefaultFlash = React.forwardRef(
         ref={ref}
         position={typeof position === "string" ? position : null}
         statusBarHeight={statusBarHeight}
+        withInsets={withInsets}
       >
         {wrapperInset => (
           <View
@@ -347,6 +349,8 @@ export default class FlashMessage extends Component {
      * The `MessageComponent` prop set the default flash message render component used to show all the messages
      */
     MessageComponent: DefaultFlash,
+
+    withInsets: true,
   };
   static propTypes = {
     canRegisterAsDefault: PropTypes.bool,
@@ -366,6 +370,7 @@ export default class FlashMessage extends Component {
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     renderFlashMessageIcon: PropTypes.func,
     transitionConfig: PropTypes.func,
+    withInsets: PropTypes.bool,
   };
   /**
    * Your can customize the default ColorTheme of this component
@@ -573,7 +578,7 @@ export default class FlashMessage extends Component {
   render() {
     const { message, visibleValue } = this.state;
 
-    const { MessageComponent, testID, accessible, accessibilityLabel, ...otherProps } = this.props;
+    const { MessageComponent, testID, accessible, accessibilityLabel, withInsets, ...otherProps } = this.props;
     const renderCustomContent = this.prop(message, "renderCustomContent");
     const renderFlashMessageIcon = this.prop(message, "renderFlashMessageIcon");
     const style = this.prop(message, "style");
@@ -613,6 +618,7 @@ export default class FlashMessage extends Component {
               accessible={!!accessible}
               testID={testID}
               accessibilityLabel={accessibilityLabel}
+              withInsets={withInsets}
             />
           </TouchableWithoutFeedback>
         )}

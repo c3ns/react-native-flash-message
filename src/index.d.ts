@@ -44,6 +44,7 @@ export interface MessageComponentProps {
     style: StyleProp<ImageStyle>,
     iconProps: Partial<ImageProps>
   ): React.ReactElement<{}> | null;
+  withInsets?: boolean;
 }
 
 export interface MessageOptions {
@@ -74,6 +75,7 @@ export interface MessageOptions {
     style: StyleProp<ImageStyle>,
     iconProps: Partial<ImageProps>
   ): React.ReactElement<{}> | null;
+  withInsets?: boolean;
 }
 
 export interface FlashMessageProps extends Partial<MessageOptions> {

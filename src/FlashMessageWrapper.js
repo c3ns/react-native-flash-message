@@ -208,7 +208,7 @@ export default class FlashMessageWrapper extends Component {
     this.setState({ isLandscape });
   }
   render() {
-    const { position, statusBarHeight = null, children } = this.props;
+    const { position, statusBarHeight = null, children, withInsets } = this.props;
     const { isLandscape } = this.state;
 
     const _statusBarHeight = getFlashMessageStatusBarHeight(isLandscape, statusBarHeight);
@@ -222,9 +222,9 @@ export default class FlashMessageWrapper extends Component {
       isIPad: isIPad,
       statusBarHeight: _statusBarHeight,
       insetTop: position === "top" ? _statusBarHeight : 0,
-      insetLeft: (position === "top" || position === "bottom") && isLandscape ? (isIPhoneX ? 21 : 0) : 0,
-      insetRight: (position === "top" || position === "bottom") && isLandscape ? (isIPhoneX ? 21 : 0) : 0,
-      insetBottom: isIPhoneX && position === "bottom" ? (isLandscape ? 24 : 34) : isAndroid ? 2 : 0,
+      insetLeft: (position === "top" || position === "bottom") && isLandscape ? (isIPhoneX && withInsets ? 21 : 0) : 0,
+      insetRight: (position === "top" || position === "bottom") && isLandscape ? (isIPhoneX && withInsets ? 21 : 0) : 0,
+      insetBottom: isIPhoneX && position === "bottom" && withInsets ? (isLandscape ? 24 : 34) : isAndroid ? 2 : 0,
     };
 
     return children(wrapper);
